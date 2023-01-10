@@ -1,14 +1,25 @@
 import express from "express";
 import * as dotenv from "dotenv";
-
-dotenv.config();
+import { GetUsersController } from "./controllers/get-users.ts/get-users";
+import { MongoGetUsersRepository } from "./repositories/get-users/mongo-get-users";
 
 const app = express();
+app.use(express.json());
+dotenv.config();
 
-app.use(express.json);
+app.get("/users", async (req, res) => {
+  try {
+    const mongoGetUsersRepository = new MongoGetUsersRepository();
 
-app.get("/", (req, res) => {
-  res.send("oi");
+    const getUsersController = new GetUsersController(mongoGetUsersRepository);
+
+    const { body, statusCode } = await getUsersController.handle();
+
+    res.status(statusCode).send(body);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 app.listen(Number(process.env.PORT), () => {
