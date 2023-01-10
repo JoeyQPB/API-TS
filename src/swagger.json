@@ -1,0 +1,242 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TS-API Documantation",
+    "description": "In this documantation you will be able to consult the API end-points and also test all availblw routes.",
+    "contact": {
+      "email": "joey_qpb@hotmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "serves": [
+    {
+      "url": "http://localhost:3333/TS-API",
+      "description": "Local Server"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "get all users",
+        "tags": ["/Users"],
+        "description": "this route gives you access to all Users",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/users"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong."
+          }
+        }
+      }
+    },
+    "/create_user": {
+      "post": {
+        "summary": "Create a new user",
+        "tags": ["/Users"],
+        "description": "it will be responsible for creating a new User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/users"
+              },
+              "examples": {
+                "New user": {
+                  "value": {
+                    "name": "joey",
+                    "email": "joey@ex.com",
+                    "telefone": 77999862226,
+                    "enderço": {
+                      "cidade": "VCA",
+                      "cep": 450000,
+                      "rua": "rua dos bobos",
+                      "numero": 0
+                    },
+                    "cpf": "00000000000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "car created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Specify a Body."
+          },
+          "500": {
+            "description": "somenthing went wrong..."
+          }
+        }
+      }
+    },
+    "/cars/car/{id}": {
+      "get": {
+        "summary": "get a car",
+        "tags": ["/cars"],
+        "security": [{ "bearerAuth": [] }],
+        "description": "this route gives you access to a car",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "car id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/cars"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    },
+    "/cars/edit_car/{id}": {
+      "put": {
+        "summary": "edit car",
+        "tags": ["/cars"],
+        "security": [{ "bearerAuth": [] }],
+        "description": "this route allows a root to change the specific car registered in the database",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "car id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/cars"
+              },
+              "examples": {
+                "New Car": {
+                  "value": {
+                    "name": "new data",
+                    "model": "new data",
+                    "brand": "new data",
+                    "version": "new data",
+                    "year": 40000,
+                    "mileage": 40000,
+                    "isAutomatic": true,
+                    "priceToSell": 40000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "car edited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/cars"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    },
+    "/cars/delete_car/{id}": {
+      "delete": {
+        "summary": "delete car",
+        "tags": ["/cars"],
+        "security": [{ "bearerAuth": [] }],
+        "description": "delete the specific car registered in the database",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "car id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "car deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "acknowledged": true,
+                  "deletedCount": 1
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "users": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "telefone": { "type": "number" },
+          "enderço": {
+            "type": "object",
+            "properties": {
+              "cidade": { "type": "string" },
+              "cep": { "type": "number" },
+              "rua": { "type": "string" },
+              "numero": { "type": "number" }
+            }
+          },
+          "cpf": { "type": "string" }
+        }
+      }
+    }
+  }
+}
