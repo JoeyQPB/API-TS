@@ -1,4 +1,4 @@
-import { GetUsersRepositoryInterface } from "../../controllers/get-users.ts/protocols";
+import { GetUsersRepositoryInterface } from "../../controllers/get-users/protocols";
 import { MongoClient } from "../../database/mongo";
 import { User } from "../../models/user";
 

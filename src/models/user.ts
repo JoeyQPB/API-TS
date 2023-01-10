@@ -1,4 +1,4 @@
-interface Address {
+export interface Address {
   cidade: string;
   cep: number;
   rua: string;
