@@ -1,13 +1,9 @@
 import { User } from "../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
-import {
-  CreateUserControllerInterface,
-  CreateUserParams,
-  CreateUserRepositoryInterface,
-} from "./protocols";
+import { HttpRequest, HttpResponse, ControllerInterface } from "../protocols";
+import { CreateUserParams, CreateUserRepositoryInterface } from "./protocols";
 import validator from "validator";
 
-export class CreateUserController implements CreateUserControllerInterface {
+export class CreateUserController implements ControllerInterface {
   constructor(
     private readonly createUserRepository: CreateUserRepositoryInterface
   ) {}

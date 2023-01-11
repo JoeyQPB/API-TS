@@ -1,17 +1,15 @@
 import { User } from "../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
-import {
-  UpdateUserControllerInterface,
-  updateUserParams,
-  UpdateUserRepositoryInterface,
-} from "./protocols";
+import { HttpRequest, HttpResponse, ControllerInterface } from "../protocols";
+import { updateUserParams, UpdateUserRepositoryInterface } from "./protocols";
 import validator from "validator";
 
-export class UpdateUserController implements UpdateUserControllerInterface {
+export class UpdateUserController implements ControllerInterface {
   constructor(
     private readonly updateUserRepository: UpdateUserRepositoryInterface
   ) {}
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<User>> {
+  async handle(
+    httpRequest: HttpRequest<updateUserParams>
+  ): Promise<HttpResponse<User>> {
     try {
       const id = httpRequest?.params?.id;
       const body = httpRequest?.body;
@@ -20,7 +18,11 @@ export class UpdateUserController implements UpdateUserControllerInterface {
         return { statusCode: 400, body: "Request missing 'ID' " };
       }
 
-      const emailIsValid = validator.isEmail(httpRequest.body!.email);
+      if (!body) {
+        return { statusCode: 400, body: "Request missing Fields " };
+      }
+
+      const emailIsValid = validator.isEmail(httpRequest.body!.email!);
       if (!emailIsValid) {
         return { statusCode: 400, body: "email invalid" };
       }
@@ -30,7 +32,7 @@ export class UpdateUserController implements UpdateUserControllerInterface {
         "telefone",
         "enderço",
       ];
-      const someFieldIsNotAllowedToUpdate = Object.keys(body).some(
+      const someFieldIsNotAllowedToUpdate = Object.keys(body!).some(
         (key) => !allowedFieldsToUpdate.includes(key as keyof updateUserParams)
       );
 

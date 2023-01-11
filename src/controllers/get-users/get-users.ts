@@ -1,9 +1,7 @@
-import {
-  GetUsersControllerInterface,
-  GetUsersRepositoryInterface,
-} from "./protocols";
+import { ControllerInterface } from "../protocols";
+import { GetUsersRepositoryInterface } from "./protocols";
 
-export class GetUsersController implements GetUsersControllerInterface {
+export class GetUsersController implements ControllerInterface {
   constructor(
     private readonly getUsersRepository: GetUsersRepositoryInterface
   ) {

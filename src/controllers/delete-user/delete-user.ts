@@ -1,11 +1,8 @@
 import { User } from "../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
-import {
-  DeleteUserControllerInterface,
-  DeleteUserRepositoryInterface,
-} from "./protocols";
+import { HttpRequest, HttpResponse, ControllerInterface } from "../protocols";
+import { DeleteUserRepositoryInterface } from "./protocols";
 
-export class DeleteUserController implements DeleteUserControllerInterface {
+export class DeleteUserController implements ControllerInterface {
   constructor(
     private readonly deleteUserRepository: DeleteUserRepositoryInterface
   ) {}

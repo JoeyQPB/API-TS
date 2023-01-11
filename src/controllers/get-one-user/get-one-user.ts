@@ -1,11 +1,8 @@
 import { User } from "../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
-import {
-  GetOneUserControllerInterface,
-  GetOneUserRepositoryInterface,
-} from "./protocols";
+import { HttpRequest, HttpResponse, ControllerInterface } from "../protocols";
+import { GetOneUserRepositoryInterface } from "./protocols";
 
-export class GetOneUserController implements GetOneUserControllerInterface {
+export class GetOneUserController implements ControllerInterface {
   constructor(
     private readonly getOneUserRepository: GetOneUserRepositoryInterface
   ) {}
