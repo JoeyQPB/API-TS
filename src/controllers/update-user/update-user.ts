@@ -46,7 +46,7 @@ export class UpdateUserController implements UpdateUserControllerInterface {
       };
     } catch (err) {
       console.log(err);
-      return { statusCode: 500, body: "Somethinf went wrong" };
+      return { statusCode: 500, body: "Something went wrong" };
     }
   }
 }
