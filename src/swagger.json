@@ -76,6 +76,7 @@
                 "Wrong New user 2": {
                   "value": {
                     "name": "joey",
+                    "email": "joey@ex.com",
                     "telefone": 77999862226,
                     "enderço": {
                       "cidade": "VCA",
@@ -147,18 +148,17 @@
         }
       }
     },
-    "/cars/edit_car/{id}": {
-      "put": {
-        "summary": "edit car",
-        "tags": ["/cars"],
-        "security": [{ "bearerAuth": [] }],
-        "description": "this route allows a root to change the specific car registered in the database",
+    "/edit_user/{id}": {
+      "patch": {
+        "summary": "edit user",
+        "tags": ["/Users"],
+        "description": "this route allows to change the specific User registered in the database",
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "type": "string",
-            "description": "car id",
+            "description": "Users id",
             "required": true
           }
         ],
@@ -166,19 +166,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/cars"
+                "$ref": "#/components/schemas/edit_User"
               },
               "examples": {
-                "New Car": {
+                "User edited": {
                   "value": {
-                    "name": "new data",
-                    "model": "new data",
-                    "brand": "new data",
-                    "version": "new data",
-                    "year": 40000,
-                    "mileage": 40000,
-                    "isAutomatic": true,
-                    "priceToSell": 40000
+                    "email": "newemail@ex.com",
+                    "enderço": {
+                      "cidade": "New City",
+                      "cep": 2020202,
+                      "rua": "New Street",
+                      "numero": 1010
+                    },
+                    "telefone": 777
                   }
                 }
               }
@@ -187,15 +187,18 @@
         },
         "responses": {
           "200": {
-            "description": "car edited",
+            "description": "user edited",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/cars"
+                  "$ref": "#/components/schemas/users"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "API error"
@@ -256,6 +259,19 @@
           },
           "cpf": { "type": "string" }
         }
+      },
+      "edit_User": {
+        "email": { "type": "string" },
+        "enderço": {
+          "type": "object",
+          "properties": {
+            "cidade": { "type": "string" },
+            "cep": { "type": "number" },
+            "rua": { "type": "string" },
+            "numero": { "type": "number" }
+          }
+        },
+        "telefone": { "type": "number" }
       }
     }
   }
