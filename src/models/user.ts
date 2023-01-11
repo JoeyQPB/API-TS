@@ -10,6 +10,6 @@ export interface User {
   name: string;
   email: string;
   telefone: number;
-  enderço: Address;
+  enderço?: Address;
   cpf: string;
 }
