@@ -29,6 +29,7 @@ export class CreateUserController implements CreateUserControllerInterface {
       if (!emailIsValid) {
         return { statusCode: 400, body: "email ivalid" };
       }
+
       const user = await this.createUserRepository.createUser(
         httpRequest.body!
       );

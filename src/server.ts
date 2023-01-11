@@ -7,6 +7,8 @@ import { MongoCreateUserRepository } from "./repositories/create-user/mongo-crea
 import { CreateUserController } from "./controllers/creste-user/create-user";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger.json";
+import { MongoUpdateUserRepository } from "./repositories/update-user/mongo-update-user";
+import { UpdateUserController } from "./controllers/update-user/update-user";
 
 const main = async () => {
   const app = express();
@@ -44,6 +46,26 @@ const main = async () => {
 
       const { body, statusCode } = await createUserController.handle({
         body: req.body,
+      });
+
+      res.status(statusCode).send(body);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
+  app.patch("/edit_user/:id", async (req, res) => {
+    try {
+      const mongoUpdateUserRepository = new MongoUpdateUserRepository();
+
+      const updateUserController = new UpdateUserController(
+        mongoUpdateUserRepository
+      );
+
+      const { body, statusCode } = await updateUserController.handle({
+        body: req.body,
+        params: req.params,
       });
 
       res.status(statusCode).send(body);
