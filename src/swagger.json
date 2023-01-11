@@ -206,24 +206,23 @@
         }
       }
     },
-    "/cars/delete_car/{id}": {
+    "/delete_user/{id}": {
       "delete": {
-        "summary": "delete car",
-        "tags": ["/cars"],
-        "security": [{ "bearerAuth": [] }],
-        "description": "delete the specific car registered in the database",
+        "summary": "delete user",
+        "tags": ["/Users"],
+        "description": "delete the specific user registered in the database",
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "type": "string",
-            "description": "car id",
+            "description": "user id",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "car deleted",
+            "description": "user deleted",
             "content": {
               "application/json": {
                 "schema": {
@@ -232,6 +231,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "API error"
