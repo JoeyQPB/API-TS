@@ -11,6 +11,8 @@ import { MongoUpdateUserRepository } from "./repositories/update-user/mongo-upda
 import { UpdateUserController } from "./controllers/update-user/update-user";
 import { MongoDeleteUserRepository } from "./repositories/delete-user/mongo-delete-user";
 import { DeleteUserController } from "./controllers/delete-user/delete-user";
+import { MongoGetOneUserRepository } from "./repositories/get-one-user/mongo-get-one-user";
+import { GetOneUserController } from "./controllers/get-one-user/get-one-user";
 
 const main = async () => {
   const app = express();
@@ -30,6 +32,25 @@ const main = async () => {
       );
 
       const { body, statusCode } = await getUsersController.handle();
+
+      res.status(statusCode).send(body);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
+  app.get("/user/:id", async (req, res) => {
+    try {
+      const mongoGetOneUserRepository = new MongoGetOneUserRepository();
+
+      const getOneUserController = new GetOneUserController(
+        mongoGetOneUserRepository
+      );
+
+      const { body, statusCode } = await getOneUserController.handle({
+        params: req.params,
+      });
 
       res.status(statusCode).send(body);
     } catch (err) {

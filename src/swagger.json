@@ -40,6 +40,41 @@
         }
       }
     },
+    "/user/{id}": {
+      "get": {
+        "summary": "get a user",
+        "tags": ["/Users"],
+        "description": "this route gives you access to a user data",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "user id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    },
     "/create_user": {
       "post": {
         "summary": "Create a new user",
@@ -108,42 +143,6 @@
           },
           "500": {
             "description": "somenthing went wrong..."
-          }
-        }
-      }
-    },
-    "/cars/car/{id}": {
-      "get": {
-        "summary": "get a car",
-        "tags": ["/cars"],
-        "security": [{ "bearerAuth": [] }],
-        "description": "this route gives you access to a car",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "type": "string",
-            "description": "car id",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/cars"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "not found"
-          },
-          "500": {
-            "description": "API error"
           }
         }
       }
