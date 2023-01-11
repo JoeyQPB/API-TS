@@ -1,4 +1,6 @@
-import { ControllerInterface } from "../protocols";
+import { User } from "../../models/user";
+import { ok, serverError } from "../helpers";
+import { ControllerInterface, HttpResponse } from "../protocols";
 import { GetUsersRepositoryInterface } from "./protocols";
 
 export class GetUsersController implements ControllerInterface {
@@ -7,20 +9,14 @@ export class GetUsersController implements ControllerInterface {
   ) {
     this.getUsersRepository = getUsersRepository;
   }
-  async handle() {
+  async handle(): Promise<HttpResponse<User[] | string>> {
     try {
       const users = await this.getUsersRepository.getUsers();
 
-      return {
-        statusCode: 200,
-        body: users,
-      };
+      return ok<User[]>(users);
     } catch (err) {
       console.log(err);
-      return {
-        statusCode: 500,
-        body: "Something went wrong.",
-      };
+      return serverError();
     }
   }
 }

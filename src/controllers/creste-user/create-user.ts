@@ -2,6 +2,7 @@ import { User } from "../../models/user";
 import { HttpRequest, HttpResponse, ControllerInterface } from "../protocols";
 import { CreateUserParams, CreateUserRepositoryInterface } from "./protocols";
 import validator from "validator";
+import { badRequest, created, serverError } from "../helpers";
 
 export class CreateUserController implements ControllerInterface {
   constructor(
@@ -10,32 +11,29 @@ export class CreateUserController implements ControllerInterface {
 
   async handle(
     httpRequest: HttpRequest<CreateUserParams>
-  ): Promise<HttpResponse<User>> {
+  ): Promise<HttpResponse<User | string>> {
     try {
       const requireFields = ["name", "email", "cpf", "telefone"];
 
       for (const fields of requireFields) {
         if (!httpRequest?.body?.[fields as keyof CreateUserParams]) {
-          return { statusCode: 400, body: `${fields} is required` };
+          return badRequest(`${fields} is required`);
         }
       }
 
       const emailIsValid = validator.isEmail(httpRequest.body!.email);
 
       if (!emailIsValid) {
-        return { statusCode: 400, body: "email ivalid" };
+        return badRequest("email ivalid");
       }
 
       const user = await this.createUserRepository.createUser(
         httpRequest.body!
       );
-      return { statusCode: 201, body: user };
+      return created<User>(user);
     } catch (err) {
       console.log(err);
-      return {
-        statusCode: 500,
-        body: "somenthing went wrong...",
-      };
+      return serverError();
     }
   }
 }

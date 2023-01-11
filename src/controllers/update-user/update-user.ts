@@ -2,6 +2,7 @@ import { User } from "../../models/user";
 import { HttpRequest, HttpResponse, ControllerInterface } from "../protocols";
 import { updateUserParams, UpdateUserRepositoryInterface } from "./protocols";
 import validator from "validator";
+import { badRequest, ok, serverError } from "../helpers";
 
 export class UpdateUserController implements ControllerInterface {
   constructor(
@@ -9,22 +10,22 @@ export class UpdateUserController implements ControllerInterface {
   ) {}
   async handle(
     httpRequest: HttpRequest<updateUserParams>
-  ): Promise<HttpResponse<User>> {
+  ): Promise<HttpResponse<User | string>> {
     try {
       const id = httpRequest?.params?.id;
       const body = httpRequest?.body;
 
       if (!id) {
-        return { statusCode: 400, body: "Request missing 'ID' " };
+        return badRequest("Request missing 'ID' ");
       }
 
       if (!body) {
-        return { statusCode: 400, body: "Request missing Fields " };
+        return badRequest("Request missing Fields ");
       }
 
       const emailIsValid = validator.isEmail(httpRequest.body!.email!);
       if (!emailIsValid) {
-        return { statusCode: 400, body: "email invalid" };
+        return badRequest("email invalid");
       }
 
       const allowedFieldsToUpdate: (keyof updateUserParams)[] = [
@@ -42,13 +43,10 @@ export class UpdateUserController implements ControllerInterface {
 
       const user = await this.updateUserRepository.updateUser(id, body);
 
-      return {
-        statusCode: 200,
-        body: user,
-      };
+      return ok<User>(user);
     } catch (err) {
       console.log(err);
-      return { statusCode: 500, body: "Something went wrong" };
+      return serverError();
     }
   }
 }
