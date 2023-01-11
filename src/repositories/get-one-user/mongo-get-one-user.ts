@@ -2,13 +2,14 @@ import { ObjectId } from "mongodb";
 import { GetOneUserRepositoryInterface } from "../../controllers/get-one-user/protocols";
 import { MongoClient } from "../../database/mongo";
 import { User } from "../../models/user";
+import { MongoUser } from "../mongo-protocols";
 
 export class MongoGetOneUserRepository
   implements GetOneUserRepositoryInterface
 {
   async getOneUser(id: string): Promise<User> {
     const user = await MongoClient.db
-      .collection<Omit<User, "id">>("users")
+      .collection<MongoUser>("users")
       .findOne({ _id: new ObjectId(id) });
 
     if (!user) {
