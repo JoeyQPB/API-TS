@@ -1,13 +1,13 @@
 # Users API
 
-API feita em um vídeo postado no meu canal no YouTube. Para acessá-lo, [clique aqui](https://youtu.be/gU3kp7Aw0JI).
-
 ## Tecnologias utilizadas
 
 - Node.js
 - TypeScript
 - Express
 - MongoDB
+- Swagger
+- Jest
 
 ## Conceitos utilizados
 
@@ -38,3 +38,4 @@ User {
 
 ## Arquitetura
 
+![Arquitetura](https://imgur.com/k5mXFoZ.png)
