@@ -20,19 +20,21 @@ API feita em um vídeo postado no meu canal no YouTube. Para acessá-lo, [clique
 <pre>
 User {
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  password: string;
-}</pre>
+  telefone: number;
+  enderço?: Address;
+  cpf: string;
+}}</pre>
 
 ## Rotas
 
 - GET /users - retorna os usuários salvos no banco
-- GET /users/id - retorna o usuário salvo no banco
-- POST /users - cria um usuário
-- PATCH /users/:id - atualiza um usuário
-- DELETE /users/:id - deleta um usuário
+- GET /user/:id - retorna o usuário salvo no banco
+- POST /create_user - cria um usuário
+- PATCH /edit_user/:id - atualiza um usuário
+- DELETE /delete_user/:id - deleta um usuário
+- GET /api-docs - documentação da API com Swagger
 
 ## Arquitetura
 
