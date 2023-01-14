@@ -14,6 +14,7 @@
 - SOLID
 - Injeção de Dependência (Dependency Injection)
 - Repository Pattern
+- Testes unitários
 
 ## Entidades
 
