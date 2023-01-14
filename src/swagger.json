@@ -262,17 +262,20 @@
         }
       },
       "edit_User": {
-        "email": { "type": "string" },
-        "enderço": {
-          "type": "object",
-          "properties": {
-            "cidade": { "type": "string" },
-            "cep": { "type": "number" },
-            "rua": { "type": "string" },
-            "numero": { "type": "number" }
-          }
-        },
-        "telefone": { "type": "number" }
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "enderço": {
+            "type": "object",
+            "properties": {
+              "cidade": { "type": "string" },
+              "cep": { "type": "number" },
+              "rua": { "type": "string" },
+              "numero": { "type": "number" }
+            }
+          },
+          "telefone": { "type": "number" }
+        }
       }
     }
   }
