@@ -18,19 +18,16 @@
 
 ## Entidades
 
-## User
+### USER
 
-<pre>
-User = {
-  name: { type: String, require: true, trim: true, uppercase: true },
-  description: { type: String, require: true, trim: true },
-  price: { type: Number, require: true },
-  createdBy: { type: Types.ObjectId, ref: "User", require: true },
-  createdAt: { type: Date, default: Date.now() },
-  updatedBy: [{ type: Types.ObjectId, ref: "User", require: true }],
-}
-</pre>
-
+User {
+  id: string;
+  name: string;
+  email: string;
+  telefone: number;
+  enderço?: Address;
+  cpf: string;
+}}</pre>
 
 ## Rotas
 
