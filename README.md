@@ -19,6 +19,9 @@
 ## Entidades
 
 <pre>
+
+## USER
+
 User {
   id: string;
   name: string;
