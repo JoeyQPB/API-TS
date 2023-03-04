@@ -19,7 +19,7 @@
 ## Entidades
 
 ### USER
-
+<pre>
 User {
   id: string;
   name: string;
